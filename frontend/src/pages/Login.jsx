@@ -1,7 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 function Login() {
 
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -9,9 +13,19 @@ function Login() {
   } = useForm();
 
   const onSubmit = (data) => {
-    alert("Login correcto");
+
+  setLoading(true);
+
+  setTimeout(() => {
+
     console.log(data);
-  };
+
+    setLoading(false);
+
+    navigate("/dashboard");
+
+  }, 1500);
+};
 
   return (
     <div className="container mt-5">
@@ -31,7 +45,14 @@ function Login() {
               type="email"
               className="form-control"
               {...register("email", {
-                required: "El email es obligatorio"
+                required: "El email es obligatorio",
+
+                pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Ingrese un email válido"
+                }
+
+
               })}
             />
 
@@ -64,12 +85,15 @@ function Login() {
             )}
           </div>
 
-          <button
+            <button
             type="submit"
             className="btn btn-primary w-100"
-          >
-            Ingresar
-          </button>
+            disabled={loading}
+            >
+
+            {loading ? "Ingresando..." : "Ingresar"}
+
+            </button>
 
         </form>
 
