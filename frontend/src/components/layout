@@ -1,1 +1,17 @@
+// src/layout/Layout.jsx
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
 
+const Layout = ({ children }) => {
+  return (
+    <div className="app-container">
+      <Navbar /> 
+      <div className="main-content">
+        <Sidebar />
+        <section className="page-view">
+          {children} {/* Aquí es donde cambia el contenido de cada página */}
+        </section>
+      </div>
+    </div>
+  );
+};
